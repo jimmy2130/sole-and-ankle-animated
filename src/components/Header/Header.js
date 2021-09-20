@@ -20,12 +20,30 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale">
+            <Display>Sale</Display>
+            <Reveal>Sale</Reveal>
+          </NavLink>
+          <NavLink href="/new">
+            <Display>New&nbsp;Releases</Display>
+            <Reveal>New&nbsp;Releases</Reveal>
+          </NavLink>
+          <NavLink href="/men">
+            <Display>Men</Display>
+            <Reveal>Men</Reveal>
+          </NavLink>
+          <NavLink href="/women">
+            <Display>Women</Display>
+            <Reveal>Women</Reveal>
+          </NavLink>
+          <NavLink href="/kids">
+            <Display>Kids</Display>
+            <Reveal>Kids</Reveal>
+          </NavLink>
+          <NavLink href="/collections">
+            <Display>Collections</Display>
+            <Reveal>Collections</Reveal>
+          </NavLink>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -115,15 +133,51 @@ const Filler = styled.div`
 `;
 
 const NavLink = styled.a`
+  position: relative;
+  padding: 0 4px;
+  // animation: Display & Reveal moving vertically
+  overflow: hidden;
+  font-weight: ${WEIGHTS.medium};
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
+  // set for the link clicking box
   color: var(--color-gray-900);
-  font-weight: ${WEIGHTS.medium};
-
   &:first-of-type {
     color: var(--color-secondary);
   }
+  
+  // border: 1px solid;
 `;
+
+const Text = styled.span`
+  display: block;
+  transform: var(--translate-from);
+  transition: transform 500ms;
+  will-change: transform;
+  @media (prefers-reduced-motion: no-preference) {  
+    ${NavLink}:hover & {
+      transform: var(--translate-to);
+      transition: transform 250ms;
+    }
+  }
+
+`
+
+const Display = styled(Text)`
+  --translate-from: translateY(0%);
+  --translate-to: translateY(-100%);
+`
+
+const Reveal = styled(Text)`
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  font-weight: ${WEIGHTS.bold}; 
+  --translate-from: translateY(100%);
+  --translate-to: translateY(0%);
+`
 
 export default Header;
